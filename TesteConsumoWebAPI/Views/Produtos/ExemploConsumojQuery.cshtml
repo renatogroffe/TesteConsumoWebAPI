@@ -1,0 +1,60 @@
+﻿<h2>Catálogo de Produtos (Exemplo de consumo de um serviço Web API via jQuery)</h2>
+<br />
+<div id="divTabelaProdutos">
+</div>
+
+@section Scripts {
+    @Scripts.Render("http://www.google.com/jsapi")
+
+    <script type="text/javascript">
+
+        jQuery.support.cors = true;
+
+        google.load('visualization', '1', { packages: ['table'] });
+        google.setOnLoadCallback(gerarVisualizacaoTabelaProdutos);
+
+        function gerarVisualizacaoTabelaProdutos() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Cód.Produto');
+            data.addColumn('string', 'Nome do Produto');
+            data.addColumn('number', 'Preço');
+
+            var urlCatalogoProdutos = '@ViewBag.UrlCatalogoProdutos';
+
+            var retornoWS;
+            $.ajax(
+            {
+                type: 'GET',
+                url: urlCatalogoProdutos,
+                dataType: 'json',
+                crossDomain: true,
+                async: false,
+                success: function (data) {
+                    retornoWS = data;
+                }
+            });
+
+            var dadosProdutos = [];
+            $.each(retornoWS, function (i, produto) {
+                dadosProdutos.push([
+                    produto.CodProduto.toString(),
+                    produto.NomeProduto.toString(),
+                    parseFloat(produto.Preco)]);
+            });
+            data.addRows(dadosProdutos);
+
+            var formatter = new google.visualization.NumberFormat(
+                {
+                    decimalSymbol: ',',
+                    groupingSymbol: '.',
+                    fractionDigits: 2
+                });
+            formatter.format(data, 2);
+
+            var controle = new google.visualization.Table(
+                document.getElementById('divTabelaProdutos'));
+            controle.draw(data, { width: 800 });
+        }
+
+    </script>
+}

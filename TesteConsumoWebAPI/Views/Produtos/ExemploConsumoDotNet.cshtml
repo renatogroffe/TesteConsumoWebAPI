@@ -1,0 +1,32 @@
+﻿@model IEnumerable<TesteConsumoWebAPI.Models.Produto>
+
+<h2>Catálogo de Produtos (Exemplo de consumo de um serviço Web API em .NET)</h2>
+
+<table class="table">
+    <tr>
+        <th style="width: 200px;">
+            Cód.Produto
+        </th>
+        <th>
+            Nome do Produto
+        </th>
+        <th style="width: 120px; text-align: right;">
+            Preço
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.CodProduto
+        </td>
+        <td>
+            @item.NomeProduto
+        </td>
+        <td style="text-align: right;">
+            @item.Preco.ToString("0.00")
+        </td>
+    </tr>
+}
+
+</table>

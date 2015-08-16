@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Compressão em serviços Web API</h1>
+    <p class="lead">Exemplo de aplicação que consome os dados compactados de um serviço Web API.</p>
+</div>
+
+<p>
+    Clique em um dos links abaixo para consultar os produtos disponíveis:
+</p>
+<ul>
+    <li>@Html.ActionLink("Consumindo os dados em .NET", "ExemploConsumoDotNet", "Produtos")</li>
+    <li>@Html.ActionLink("Consumindo os dados em jQuery", "ExemploConsumojQuery", "Produtos")</li>
+</ul>
